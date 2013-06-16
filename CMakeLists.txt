@@ -1,7 +1,12 @@
 project(cpp-practice)
 cmake_minimum_required(VERSION 2.8)
+option(CXX11 "Compile in C+11 Mode" OFF)
 if (MINGW)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libgcc -static-libstdc++")
+endif()
+if (CXX11)
+add_definitionS(-DCXX11)
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++11")
 endif()
 
 add_subdirectory(src)
