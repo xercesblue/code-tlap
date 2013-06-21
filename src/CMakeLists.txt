@@ -1,3 +1,5 @@
+add_subdirectory(tlap-lib)
+
 add_subdirectory(GridWalker)
 add_subdirectory(permutations)
 add_subdirectory(stringsub)
@@ -5,3 +7,4 @@ add_subdirectory(stringsub-inplace)
 add_subdirectory(tlap-1)
 add_subdirectory(tlap-2-lunh)
 add_subdirectory(tlap-2-decode)
+add_subdirectory(tlap-2-problems)
