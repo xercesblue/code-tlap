@@ -100,27 +100,55 @@ void draw_x() {
 
 }
 
+int bin2dec() {
+	char scanned;
+	int number, digit;
+
+	while ((scanned = Input::read_ch()) != '\n') {
+		digit = scanned - '0';
+		number = (number * 2) + digit;
+	}
+	return number;
+}
+
+std::string dec2bin() {
+	int number = Input::read_integer();
+	std::string res;
+	int q;
+	while (number > 0) {
+		q = number % 2;
+		number /= 2;
+		res.insert(0, 1, q == 0 ? '0' : '1');
+	}
+	return res;
+}
+
 int main(int argc, char* argv[]) {
 //	std::cout << "Type 'base,tip' ";
 //	int base = Input::read_integer(); int tip = Input::read_integer();
-	int base = 10, tip = 2;
-	std::cout << base << ":"  << tip << std::endl;
+//	int base = 10, tip = 2;
+//	std::cout << base << ":"  << tip << std::endl;
 
-	std::cout << "======" << std::endl;
+//	std::cout << "======" << std::endl;
 
-	upside_down_triangle(base, tip);
+//	upside_down_triangle(base, tip);
 
-	std::cout << "======" << std::endl;
+//	std::cout << "======" << std::endl;
 
-	diamond(base, tip);
+//	diamond(base, tip);
 
-	std::cout << "======" << std::endl;
+//	std::cout << "======" << std::endl;
 
-	draw_x();
+//	draw_x();
 
-	std::cout << "ISBN13" << std::endl;
-	ISBN13 isbn13;
-	std::cout << "Is valid? " << isbn13.is_valid_stdin() << std::endl;
-	std::cout << "What Check? " << isbn13.calc_check_from_stdin() << std::endl;
+//	std::cout << "ISBN13" << std::endl;
+//	ISBN13 isbn13;
+//	std::cout << "Is valid? " << isbn13.is_valid_stdin() << std::endl;
+//	std::cout << "What Check? " << isbn13.calc_check_from_stdin() << std::endl;
+
+	int dec = bin2dec();
+	std::cout << "dec: " << dec << std::endl;
+	std::string bin = dec2bin();
+	std::cout << "bin: " << bin << std::endl;
 	return 0;
 }

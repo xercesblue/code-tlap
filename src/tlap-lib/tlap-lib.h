@@ -8,6 +8,7 @@ public:
 
 	Input() {};
 	static int read_integer();
+	static char read_ch();
 };
 
 #endif //TLAP_LIB_H

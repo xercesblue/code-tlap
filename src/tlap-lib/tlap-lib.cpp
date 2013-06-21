@@ -1,9 +1,9 @@
 #include <tlap-lib.h>
 #include <iostream>
 
-/** Read comma separated digits from stdin into an int
- * @brief scanDigit
- * @return
+/**
+ * @brief Input::read_integer Read comma separated digits from stdin into an int
+ * @return integer read
  */
 int Input::read_integer() {
 	int number = 0;
@@ -23,4 +23,12 @@ int Input::read_integer() {
 	}
 
 	return (neg) ? -number : number;
+}
+
+/**
+ * @brief Input::read_ch Reads a character from stdin
+ * @return character read
+ */
+char Input::read_ch() {
+	return std::cin.get();
 }
