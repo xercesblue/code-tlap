@@ -123,6 +123,83 @@ std::string dec2bin() {
 	return res;
 }
 
+struct LineStats {
+	int words;
+	int longest_word;
+	int max_vowels;
+};
+
+void line_stats(struct LineStats& stats) {
+	char scanned;
+
+	enum Char {CONSONANT, VOWEL, PUNCTUATION, WHITESPACE};
+	Char char_state = WHITESPACE;
+	int max_vowels = 0;
+	int longest_word = 0;
+
+
+	stats.longest_word = 0;
+	stats.max_vowels = 0;
+	stats.words = 0;
+
+	while ((scanned = Input::read_ch())) {
+		switch (scanned) {
+		case 'a':
+		case 'A':
+		case 'e':
+		case 'E':
+		case 'i':
+		case 'I':
+		case 'o':
+		case 'O':
+		case 'u':
+		case 'U':
+			char_state = VOWEL;
+			max_vowels++;
+			break;
+		default:
+			break;
+		}
+
+		if (char_state != VOWEL && ((scanned >= 'a' && scanned <= 'z') || (scanned >= 'A' && scanned <= 'Z'))) {
+			char_state = CONSONANT;
+		} else if (scanned == ' ' || scanned == '\t' || scanned == '\n') {
+			char_state = WHITESPACE;
+		} else if (char_state != VOWEL){
+			char_state = PUNCTUATION;
+		}
+
+		// While VOWEL or CONSONANT, increment word
+		if (char_state != WHITESPACE && char_state != PUNCTUATION) {
+			longest_word++;
+		}
+
+		// At word boundary, increase word count
+		// Also calculate longest word seen so far, maximum vowel
+		// amound seen words
+		if (char_state == WHITESPACE) {
+			stats.words++;
+
+			// Calculate Longest Word, Max Vowels
+			longest_word = std::max(stats.longest_word, longest_word);
+			stats.longest_word = longest_word;
+
+			max_vowels = std::max(stats.max_vowels, max_vowels);
+			stats.max_vowels = max_vowels;
+
+			longest_word = 0;
+			max_vowels = 0;
+
+			// Exit on end of line
+			if (scanned == '\n')
+				break;
+		}
+
+
+
+	}
+}
+
 int main(int argc, char* argv[]) {
 //	std::cout << "Type 'base,tip' ";
 //	int base = Input::read_integer(); int tip = Input::read_integer();
@@ -146,9 +223,15 @@ int main(int argc, char* argv[]) {
 //	std::cout << "Is valid? " << isbn13.is_valid_stdin() << std::endl;
 //	std::cout << "What Check? " << isbn13.calc_check_from_stdin() << std::endl;
 
-	int dec = bin2dec();
-	std::cout << "dec: " << dec << std::endl;
-	std::string bin = dec2bin();
-	std::cout << "bin: " << bin << std::endl;
+//	int dec = bin2dec();
+//	std::cout << "dec: " << dec << std::endl;
+//	std::string bin = dec2bin();
+//	std::cout << "bin: " << bin << std::endl;
+
+	LineStats stats;
+	line_stats(stats);
+	std::cout << "Words " << stats.words << std::endl;
+	std::cout << "Longest Word: " << stats.longest_word << std::endl;
+	std::cout << "Maximum Vowels " << stats.max_vowels << std::endl;
 	return 0;
 }
