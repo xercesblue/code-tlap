@@ -8,3 +8,6 @@ add_subdirectory(tlap-1)
 add_subdirectory(tlap-2-lunh)
 add_subdirectory(tlap-2-decode)
 add_subdirectory(tlap-2-problems)
+
+
+add_subdirectory(tlap-3-insertion)

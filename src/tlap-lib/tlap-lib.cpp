@@ -32,3 +32,25 @@ int Input::read_integer() {
 char Input::read_ch() {
 	return std::cin.get();
 }
+
+void Sort::insertion(int n[], const int N_SIZE)
+{
+	int start = 0;
+	int end = N_SIZE;
+	for (int i = start + 1; i < end; ++i) {
+		for (int j = i; j > start && n[j] < n[j-1]; --j) {
+			// Found position, swap n[j] and n[j-1]
+			int tmp = n[j-1];
+			n[j-1] = n[j];
+			n[j] = tmp;
+		}
+	}
+}
+
+
+void print_arr(int n[], const int N_SIZE) {
+	for (int i = 0; i < N_SIZE; ++i) {
+		std::cout << n[i] << " ";
+	}
+	std::cout << std::endl;
+}
