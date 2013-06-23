@@ -12,3 +12,4 @@ add_subdirectory(tlap-2-problems)
 
 add_subdirectory(tlap-3-insertion)
 add_subdirectory(tlap-3-arrays)
+add_subdirectory(tlap-3-quicksort)
