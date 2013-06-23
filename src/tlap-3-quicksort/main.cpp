@@ -6,13 +6,6 @@
 //  Move all elements > pivot to the right of pivot
 // Recurse on left and right sub arrays
 
-// TODO: Swap references instead of values
-void swap(int n[], const int a_idx, const int b_idx) {
-	int tmp = n[a_idx];
-	n[a_idx] = n[b_idx];
-	n[b_idx] = tmp;
-}
-
 // Partition array from start to end on pivot
 // Return pivot
 // lower_equal_pivot-pivot-greater_pivot
@@ -36,12 +29,12 @@ int qs_partition_(int n[], const int low, const int high) {
 	int after_pivot = low;
 	for (int i = low; i < high; ++i) {
 		if (n[i] < n[pivot]) {
-			swap(n, i, after_pivot);
+			swap(&n[i], &n[after_pivot]);
 			after_pivot++;
 		}
 	}
 
-	swap(n, pivot, after_pivot);
+	swap(&n[pivot], &n[after_pivot]);
 
 	return pivot;
 }
@@ -67,4 +60,5 @@ int main(int argc, char* argv[]) {
 	int n2[N_SIZE] = {-9,-8, -7, -6, -5, -4, -3, -2, -1, 0};
 	quicksort(n2, N_SIZE);
 	print_arr(n2, N_SIZE);
+	bench_sorts(1000);
 }

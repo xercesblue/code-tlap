@@ -47,10 +47,85 @@ void Sort::insertion(int n[], const int N_SIZE)
 	}
 }
 
+void Sort::quicksort(int n[], const int N_SIZE) {
+	Sort::quicksort_h_(n, 0, N_SIZE);
+}
+#include <stdlib.h>
+
+void swap(int* a, int* b) {
+	int tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+void swap(int n[], int a_idx, int b_idx) {
+	int tmp = n[a_idx];
+	n[a_idx] = n[b_idx];
+	n[b_idx] = tmp;
+}
+
+// Partition array from start to end on pivot
+// Return pivot
+// lower_equal_pivot-pivot-greater_pivot
+int Sort::qs_partition_(int n[], const int low, const int high) {
+	// Test Input: 1 9  7  16  3  2  0  8
+	//
+	//  .1i 9  7  16  3  2  0  8 s
+	//	 1 .9i 7  16  3  2  0  8
+	//   1  7 .9i 16  3  2  0  8 s
+	//   1  7 .9  16i 3  2  0  8
+	//   1  7 .9  16  3i 2  0  8 s
+	//   1  7  3 .16  9  2i 0  8 s
+	//   1  7  3  2  .9  16 0i 8 s
+	//
+	//  -- end of for loop
+	//
+	//  swap (p, after_pivot)
+	// 1 7 3  2  0 .16 9  8i  s
+
+	int pivot = high;
+	int after_pivot = low;
+	for (int i = low; i < high; ++i) {
+		if (n[i] < n[pivot]) {
+			swap(&n[i], &n[after_pivot]);
+			after_pivot++;
+		}
+	}
+
+	swap(&n[pivot], &n[after_pivot]);
+
+	return pivot;
+}
+
+void Sort::quicksort_h_(int n[], const int l, const int h) {
+
+	if (h - l > 0) {
+		int pivot = qs_partition_(n, l, h);
+		Sort::quicksort_h_(n, l, pivot-1);
+		Sort::quicksort_h_(n, pivot+1, h);
+	}
+}
+
 
 void print_arr(int n[], const int N_SIZE) {
 	for (int i = 0; i < N_SIZE; ++i) {
 		std::cout << n[i] << " ";
 	}
 	std::cout << std::endl;
+}
+
+
+void bench_sorts(int n) {
+	ArrayGenerator ag;
+	Timer t;
+	int* arr = ag.gen_random(n);
+
+	t.start();
+	Sort::insertion(arr, n);
+	t.stop();
+
+	std::cout <<t.elapsedMS().count() << std::endl;
+
+
+
 }
