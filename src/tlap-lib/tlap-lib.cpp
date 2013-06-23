@@ -40,28 +40,13 @@ void Sort::insertion(int n[], const int N_SIZE)
 	for (int i = start + 1; i < end; ++i) {
 		for (int j = i; j > start && n[j] < n[j-1]; --j) {
 			// Found position, swap n[j] and n[j-1]
-			int tmp = n[j-1];
-			n[j-1] = n[j];
-			n[j] = tmp;
+			swap(&n[j], &n[j-1]);
 		}
 	}
 }
 
 void Sort::quicksort(int n[], const int N_SIZE) {
 	Sort::quicksort_h_(n, 0, N_SIZE);
-}
-#include <stdlib.h>
-
-void swap(int* a, int* b) {
-	int tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
-
-void swap(int n[], int a_idx, int b_idx) {
-	int tmp = n[a_idx];
-	n[a_idx] = n[b_idx];
-	n[b_idx] = tmp;
 }
 
 // Partition array from start to end on pivot
@@ -102,7 +87,7 @@ void Sort::quicksort_h_(int n[], const int l, const int h) {
 	if (h - l > 0) {
 		int pivot = qs_partition_(n, l, h);
 		Sort::quicksort_h_(n, l, pivot-1);
-		Sort::quicksort_h_(n, pivot+1, h);
+		Sort::quicksort_h_(n, pivot + 1, h);
 	}
 }
 
@@ -120,12 +105,24 @@ void bench_sorts(int n) {
 	Timer t;
 	int* arr = ag.gen_random(n);
 
+	std::cout << "Done generating array" << std::endl;
+	print_arr(arr, n);
+
 	t.start();
 	Sort::insertion(arr, n);
 	t.stop();
 
-	std::cout <<t.elapsedMS().count() << std::endl;
+	std::cout << "=========" << std::endl;
+	print_arr(arr, n);
+	std::cout << "Insertion sort on " << n << " elements: " << t.elapsedMS().count() <<"ms" << std::endl;
 
+	t.start();
+	Sort::quicksort(arr, n);
+	t.stop();
+
+	std::cout << "=========" << std::endl;
+	print_arr(arr, n);
+	std::cout << "Quicksort sort on " << n << " elements: " << t.elapsedMS().count() <<"ms" << std::endl;
 
 
 }

@@ -102,7 +102,7 @@ void draw_x() {
 
 int bin2dec() {
 	char scanned;
-	int number, digit;
+	int number = 0, digit;
 
 	while ((scanned = Input::read_ch()) != '\n') {
 		digit = scanned - '0';

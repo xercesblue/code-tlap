@@ -37,7 +37,7 @@ int scanDigit() {
 
 int main(int argc, char* argv[]) {
 	// While until eol
-	char scanned = '\0', outputCh;
+	char scanned = '\0', outputCh =' ';
 	char punctuation[] = {'!', '?', ',','.',' ',';','"','\''};
 	int number = 0;
 
