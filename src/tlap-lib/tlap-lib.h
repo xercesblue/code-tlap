@@ -40,12 +40,15 @@ public:
 	Sort() {}
 	static void insertion(int n[], const int N_SIZE);
 	static void quicksort(int n[], const int N_SIZE);
+	static void quicksort3(int n[], const int N_SIZE);
 private:
 	// Quicksort Helpers
 	// Partition Array
 	inline static int qs_partition_(int n[], const int low, const int high);
+	inline static int qs_partition3_(int n[], const int low, const int high);
 	// Recursive Helper
 	inline static void quicksort_h_(int n[], const int l, const int h);
+	inline static void quicksort3_(int n[], const int l, const int h);
 };
 #ifdef CXX11
 #include <list>
@@ -63,7 +66,7 @@ public:
 
 		std::random_device rd;
 		std::mt19937 e2(rd());
-		std::binomial_distribution<> uint_dist(0, n);
+		std::uniform_int_distribution<> uint_dist(0, n);
 		for (int i = 0; i < n; i++) {
 			arr[i] = uint_dist(e2);
 		}

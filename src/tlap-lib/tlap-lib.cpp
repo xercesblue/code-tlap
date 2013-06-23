@@ -1,5 +1,6 @@
 #include <tlap-lib.h>
 #include <iostream>
+#include <algorithm>
 
 /**
  * @brief Input::read_integer Read comma separated digits from stdin into an int
@@ -46,7 +47,57 @@ void Sort::insertion(int n[], const int N_SIZE)
 }
 
 void Sort::quicksort(int n[], const int N_SIZE) {
-	Sort::quicksort_h_(n, 0, N_SIZE);
+	// Help with degenerate case for many repeated elements
+	// All repeated elements still degenerates to O(n^2)
+	std::random_shuffle(n, n + N_SIZE);
+	Sort::quicksort_h_(n, 0, N_SIZE - 1);
+}
+void Sort::quicksort3(int n[], const int N_SIZE) {
+	// No need to care for degenerate case
+	Sort::quicksort3_(n, 0, N_SIZE - 1);
+}
+
+// 3-Way Quicksort
+// Based on Sedgewick/Wayne
+// http://algs4.cs.princeton.edu/23quicksort/Quick3way.java.html
+void Sort::quicksort3_(int n[], const int low, const int high)
+{
+	//	if (hi <= lo) return;
+	//       int lt = lo, gt = hi;
+	//       Comparable v = a[lo];
+	//       int i = lo;
+	//       while (i <= gt) {
+	//           int cmp = a[i].compareTo(v);
+	//           if      (cmp < 0) exch(a, lt++, i++);
+	//           else if (cmp > 0) exch(a, i, gt--);
+	//           else              i++;
+	//       }
+
+	if (high - low <= 0) return;
+
+	int pivot = n[low];
+	int lk = low, hk = high;
+	int i = low;
+	int res = 0;
+	while (i <= hk) {
+		res = n[i] - pivot;
+
+		if (res < 0) { // n[i] < n[pivot]
+			swap(&n[lk++], &n[i++]);
+		} else if (res > 0) { // n[i] > n[pivot]
+			swap(&n[i], &n[hk--]);
+		} else {
+			i++;
+		}
+
+	}
+
+
+
+	// Invariant: n[low..lk-1] <= n[lk..hk] < n[hk+1..high]
+	Sort::quicksort3_(n, low, lk-1);
+	Sort::quicksort3_(n, hk+1, high);
+
 }
 
 // Partition array from start to end on pivot
@@ -79,9 +130,10 @@ int Sort::qs_partition_(int n[], const int low, const int high) {
 
 	swap(&n[pivot], &n[after_pivot]);
 
-	return pivot;
+	return after_pivot;
 }
 
+// Based on Skienna 2way Quicksort
 void Sort::quicksort_h_(int n[], const int l, const int h) {
 
 	if (h - l > 0) {
@@ -99,30 +151,67 @@ void print_arr(int n[], const int N_SIZE) {
 	std::cout << std::endl;
 }
 
-
+#include <cstring>
 void bench_sorts(int n) {
 	ArrayGenerator ag;
 	Timer t;
 	int* arr = ag.gen_random(n);
+	int* cpy = new int[n];
+
+	for (int i = 0; i < n; i++) cpy[i] = arr[i];
+
 
 	std::cout << "Done generating array" << std::endl;
-	print_arr(arr, n);
+//	print_arr(arr, n);
 
-	t.start();
-	Sort::insertion(arr, n);
-	t.stop();
+//	std::cout << "=========" << std::endl;
+//	std::cout << "c";
+//	print_arr(cpy, n);
+//	t.start();
+//	Sort::insertion(arr, n);
+//	t.stop();
+//	print_arr(arr, n);
+//	std::cout << "Insertion sort on " << n << " elements: " << t.elapsedMS().count() <<"ms" << std::endl;
+
+
 
 	std::cout << "=========" << std::endl;
-	print_arr(arr, n);
-	std::cout << "Insertion sort on " << n << " elements: " << t.elapsedMS().count() <<"ms" << std::endl;
+	for (int i = 0; i < n; i++) arr[i] = cpy[i];
+//	std::cout << "c";
+//	print_arr(arr, n);
+	t.start();
+	Sort::quicksort(arr, n);
+	t.stop();
+//	print_arr(arr, n);
+	std::cout << "Quicksort sort on " << n << " elements: " << t.elapsedMS().count() <<"ms" << std::endl;
+
+
+	std::cout << "=========" << std::endl;
+	for (int i = 0; i < n; i++) arr[i] = cpy[i];
+//	std::cout << "c";
+//	print_arr(arr, n);
+	t.start();
+	Sort::quicksort3(arr, n);
+	t.stop();
+//	print_arr(arr, n);
+	std::cout << "Quicksort3 sort on " << n << " elements: " << t.elapsedMS().count() <<"ms" << std::endl;
+
+	for (int i = 0; i < n; i++) arr[i] = 0;
 
 	t.start();
 	Sort::quicksort(arr, n);
 	t.stop();
+	std::cout << "Quicksort Degenerate - Equal Elements: " << t.elapsedMS().count() << "ms" << std::endl;
 
-	std::cout << "=========" << std::endl;
-	print_arr(arr, n);
-	std::cout << "Quicksort sort on " << n << " elements: " << t.elapsedMS().count() <<"ms" << std::endl;
+	for (int i = 0; i < n; i++) arr[i] = 0;
+
+	t.start();
+	Sort::quicksort3(arr, n);
+	t.stop();
+	std::cout << "Quicksort Degenerate3 - Equal Elements: " << t.elapsedMS().count() << "ms" << std::endl;
+
+
+	delete[] cpy;
 
 
 }
