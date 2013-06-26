@@ -8,7 +8,8 @@ void bench_sorts(int n) {
 	Timer t;
 	int* arr = ag.gen_random(n);
 	int* cpy = new int[n];
-
+	long avg = 0;
+	int runs = 50;
 	for (int i = 0; i < n; i++) cpy[i] = arr[i];
 
 
@@ -16,49 +17,55 @@ void bench_sorts(int n) {
 //	print_arr(arr, n);
 
 	std::cout << "=========" << std::endl;
-//	std::cout << "c";
-//	print_arr(cpy, n);
-	t.start();
-	Sort::insertion(arr, n);
-	t.stop();
-//	print_arr(arr, n);
-	std::cout << "Insertion sort on " << n << " elements: " << t.elapsedMS().count() <<"ms" << std::endl;
+	avg = 0;
+	for (int r = 0; r < runs; ++r) {
+		for (int i = 0; i < n; i++) arr[i] = cpy[i];
+		t.start();
+		Sort::insertion(arr, n);
+		t.stop();
+		avg += t.elapsedMS().count();
+	}
+	std::cout << "Insertion sort on " << n << " elements: " << avg/runs <<"ms" << std::endl;
 
 
 
 	std::cout << "=========" << std::endl;
-	for (int i = 0; i < n; i++) arr[i] = cpy[i];
-//	std::cout << "c";
-//	print_arr(arr, n);
-	t.start();
-	Sort::quicksort(arr, n);
-	t.stop();
-//	print_arr(arr, n);
-	std::cout << "Quicksort sort on " << n << " elements: " << t.elapsedMS().count() <<"ms" << std::endl;
-
-
-	std::cout << "=========" << std::endl;
-	for (int i = 0; i < n; i++) arr[i] = cpy[i];
-//	std::cout << "c";
-//	print_arr(arr, n);
-	t.start();
-	Sort::quicksort3(arr, n);
-	t.stop();
-//	print_arr(arr, n);
-	std::cout << "Quicksort3 sort on " << n << " elements: " << t.elapsedMS().count() <<"ms" << std::endl;
-
+	avg = 0;
+	for (int r = 0; r < runs; ++r) {
+		for (int i = 0; i < n; i++) arr[i] = cpy[i];
+		t.start();
+		Sort::quicksort(arr, n);
+		t.stop();
+		avg += t.elapsedMS().count();
+	}
+	std::cout << "Quicksort sort on " << n << " elements: " << avg/runs <<"ms" << std::endl;
 
 
 
 	std::cout << "=========" << std::endl;
-	for (int i = 0; i < n; i++) arr[i] = cpy[i];
-//	std::cout << "c";
-//	print_arr(arr, n);
-	t.start();
-	Sort::mergesort(arr, n);
-	t.stop();
-//	print_arr(arr, n);
-	std::cout << "Mergesort sort on " << n << " elements: " << t.elapsedMS().count() <<"ms" << std::endl;
+	avg = 0;
+	for (int r = 0; r < runs; ++r) {
+		for (int i = 0; i < n; i++) arr[i] = cpy[i];
+		t.start();
+		Sort::quicksort3(arr, n);
+		t.stop();
+		avg += t.elapsedMS().count();
+	}
+	std::cout << "Quicksort3 sort on " << n << " elements: " << avg/runs <<"ms" << std::endl;
+
+
+
+
+	std::cout << "=========" << std::endl;
+	avg = 0;
+	for (int r = 0; r < runs; ++r) {
+		for (int i = 0; i < n; i++) arr[i] = cpy[i];
+		t.start();
+		Sort::mergesort(arr, n);
+		t.stop();
+		avg += t.elapsedMS().count();
+	}
+	std::cout << "Mergesort sort on " << n << " elements: " << avg/runs <<"ms" << std::endl;
 
 
 //	for (int i = 0; i < n; i++) arr[i] = 0;
