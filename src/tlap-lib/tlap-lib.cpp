@@ -170,6 +170,31 @@ void Sort::merge_h_(int n[], int low, int half, int high) {
 	while (!b2.empty()) { n[i++] = b2.front(); b2.pop_front(); }
 }
 
+void Sort::merge2_h_(int n[], int low, int half, int high) {
+
+	//	for (int i = low; i <= half; ++i) b1.push_back(n[i]);
+	//	for (int i = half + 1; i <= high; ++i) b2.push_back(n[i]);
+
+		std::vector<int> tmp(high - low + 1);
+		int li = low, ri = half + 1;
+
+		while (li <= half && ri <= high) {
+
+			if (n[li] <= n[ri]) {
+				tmp.push_back(n[li++]);
+			} else {
+				tmp.push_back(n[ri++]);
+			}
+		}
+
+		// 5 4 3 2 1
+		//
+
+		// Add remaining elements
+		while (li <= half) { tmp.push_back(n[li++]);}
+		while (ri <= high) { tmp.push_back(n[ri++]);}
+		for (int i = low, idx = 0; i <= high; ++i, ++idx) n[i] = tmp.at(idx);
+}
 
 void Sort::mergesort_h_(int n[], int start, int end) {
 	if (start >= end) return;
