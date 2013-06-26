@@ -3,6 +3,12 @@
 
 #include <cstring>
 
+
+// Francisco De La Cruz
+// dlcs.frank@gmail.com
+// June 24, 2013
+
+// Up to date sorting code in tlap-lib.h/.cpp
 void bench_sorts(int n) {
 	ArrayGenerator ag;
 	Timer t;
@@ -10,22 +16,23 @@ void bench_sorts(int n) {
 	int* cpy = new int[n];
 	long avg = 0;
 	int runs = 50;
+
 	for (int i = 0; i < n; i++) cpy[i] = arr[i];
 
 
 	std::cout << "Done generating array" << std::endl;
-//	print_arr(arr, n);
 
-	std::cout << "=========" << std::endl;
-	avg = 0;
-	for (int r = 0; r < runs; ++r) {
-		for (int i = 0; i < n; i++) arr[i] = cpy[i];
-		t.start();
-		Sort::insertion(arr, n);
-		t.stop();
-		avg += t.elapsedMS().count();
-	}
-	std::cout << "Insertion sort on " << n << " elements: " << avg/runs <<"ms" << std::endl;
+
+//	std::cout << "=========" << std::endl;
+//	avg = 0;
+//	for (int r = 0; r < runs; ++r) {
+//		for (int i = 0; i < n; i++) arr[i] = cpy[i];
+//		t.start();
+//		Sort::insertion(arr, n);
+//		t.stop();
+//		avg += t.elapsedMS().count();
+//	}
+//	std::cout << "Insertion sort on " << n << " elements: " << avg/runs <<"ms" << std::endl;
 
 
 
@@ -52,8 +59,6 @@ void bench_sorts(int n) {
 		avg += t.elapsedMS().count();
 	}
 	std::cout << "Quicksort3 sort on " << n << " elements: " << avg/runs <<"ms" << std::endl;
-
-
 
 
 	std::cout << "=========" << std::endl;
@@ -92,7 +97,7 @@ void bench_sorts(int n) {
 
 
 int main(int argc, char* argv[]) {
-	int narg = 10;
+	int narg = 5;
 	if (argc > 1) {
 		narg = std::stoi(argv[1]);
 	}

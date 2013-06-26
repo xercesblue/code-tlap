@@ -53,8 +53,10 @@ private:
 
 	// Mergesort Helpers
 	inline static void mergesort_h_(int n[], const int l, const int h);
+	inline static void mergesort3_h_(int n[], int tmp[], const int l, const int h);
 	inline static void merge_h_(int n[], int low, int half, int high);
 	inline static void merge2_h_(int n[], int low, int half, int high);
+	inline static void merge3_h_(int n[], int tmp[], int low, int half, int high);
 };
 
 #ifdef CXX11

@@ -1,6 +1,12 @@
 #include <iostream>
 #include <tlap-lib.h>
 
+// Francisco De La Cruz
+// dlcs.frank@gmail.com
+// June 24, 2013
+
+// Up to date sorting code in tlap-lib.h/.cpp
+
 // Chose pivot
 //  Move all elements <= pivot to the left of pivot
 //  Move all elements > pivot to the right of pivot

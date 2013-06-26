@@ -139,13 +139,10 @@ void Sort::quicksort_h_(int n[], const int l, const int h) {
 
 	if (h - l > 0) {
 		int pivot = qs_partition_(n, l, h);
-		Sort::quicksort_h_(n, l, pivot-1);
+		Sort::quicksort_h_(n, l, pivot - 1);
 		Sort::quicksort_h_(n, pivot + 1, h);
 	}
 }
-
-
-
 
 void Sort::merge_h_(int n[], int low, int half, int high) {
 	std::list<int> b1, b2;
@@ -172,9 +169,6 @@ void Sort::merge_h_(int n[], int low, int half, int high) {
 
 void Sort::merge2_h_(int n[], int low, int half, int high) {
 
-	//	for (int i = low; i <= half; ++i) b1.push_back(n[i]);
-	//	for (int i = half + 1; i <= high; ++i) b2.push_back(n[i]);
-
 		std::vector<int> tmp(high - low + 1);
 		int li = low, ri = half + 1;
 
@@ -187,23 +181,51 @@ void Sort::merge2_h_(int n[], int low, int half, int high) {
 			}
 		}
 
-		// 5 4 3 2 1
-		//
-
 		// Add remaining elements
 		while (li <= half) { tmp.push_back(n[li++]);}
 		while (ri <= high) { tmp.push_back(n[ri++]);}
 		for (int i = low, idx = 0; i <= high; ++i, ++idx) n[i] = tmp.at(idx);
 }
 
+void Sort::merge3_h_(int n[], int tmp[], int low, int half, int high) {
+
+		int li = low, ri = half + 1, i = 0;
+
+		while (li <= half && ri <= high) {
+
+			if (n[li] <= n[ri]) {
+				tmp[i++] = n[li++];
+			} else {
+				tmp[i++] = n[ri++];
+			}
+		}
+
+		// Add remaining elements
+		while (li <= half) { tmp[i++] = n[li++];}
+		while (ri <= high) { tmp[i++] = n[ri++];}
+		for (int f = low, idx = 0; f <= high; ++f, ++idx) n[f] = tmp[idx];
+}
+
 void Sort::mergesort_h_(int n[], int start, int end) {
 	if (start >= end) return;
-
-	const int half_point = start + (end - start) / 2; // Or start + end / 2 for values of START && END < MAX_INT - 1
+	// Or start + end / 2 for values of START && END < MAX_INT - 1
+	const int half_point = start + (end - start) / 2;
 	mergesort_h_(n, start, half_point);
 	mergesort_h_(n, half_point + 1, end);
 
-	merge_h_(n, start, half_point, end);
+	merge2_h_(n, start, half_point, end);
+
+}
+
+
+void Sort::mergesort3_h_(int n[], int tmp[],  int start, int end) {
+	if (start >= end) return;
+	// Or start + end / 2 for values of START && END < MAX_INT - 1
+	const int half_point = start + (end - start) / 2;
+	mergesort3_h_(n, tmp, start, half_point);
+	mergesort3_h_(n, tmp, half_point + 1, end);
+
+	merge3_h_(n, tmp, start, half_point, end);
 
 }
 
@@ -213,12 +235,13 @@ void Sort::mergesort_h_(int n[], int start, int end) {
 // Merge left and right arrays
 void Sort::mergesort(int n[], const int N_SIZE) {
 	if (N_SIZE < 1) return;
-	mergesort_h_(n, 0, N_SIZE - 1);
+//	mergesort_h_(n, 0, N_SIZE - 1);
+
+	int* tmp = new int[N_SIZE];
+	mergesort3_h_(n, tmp, 0, N_SIZE - 1);
+
+	delete[] tmp;
 }
-
-
-
-
 
 void print_arr(int n[], const int N_SIZE) {
 	for (int i = 0; i < N_SIZE; ++i) {

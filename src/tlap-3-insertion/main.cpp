@@ -1,6 +1,10 @@
 #include <iostream>
 
+// Francisco De La Cruz
+// dlcs.frank@gmail.com
+// June 24, 2013
 
+// Up to date sorting code in tlap-lib.h/.cpp
 void insertion_sort(int n[], const int N_SIZE) {
 	int start = 0;
 	int end = N_SIZE;

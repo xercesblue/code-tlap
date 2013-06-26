@@ -2,6 +2,12 @@
 #include <vector>
 #include <tlap-lib.h>
 
+// Francisco De La Cruz
+// dlcs.frank@gmail.com
+// June 24, 2013
+
+// Up to date sorting code in tlap-lib.h/.cpp
+
 void merge_h_(int n[], int low, int half, int high) {
 
 //	for (int i = low; i <= half; ++i) b1.push_back(n[i]);
