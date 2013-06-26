@@ -41,6 +41,7 @@ public:
 	static void insertion(int n[], const int N_SIZE);
 	static void quicksort(int n[], const int N_SIZE);
 	static void quicksort3(int n[], const int N_SIZE);
+	static void mergesort(int n[], const int N_SIZE);
 private:
 	// Quicksort Helpers
 	// Partition Array
@@ -49,7 +50,12 @@ private:
 	// Recursive Helper
 	inline static void quicksort_h_(int n[], const int l, const int h);
 	inline static void quicksort3_(int n[], const int l, const int h);
+
+	// Mergesort Helpers
+	inline static void mergesort_h_(int n[], const int l, const int h);
+	inline static void merge_h_(int n[], int low, int half, int high);
 };
+
 #ifdef CXX11
 #include <list>
 #include <memory>

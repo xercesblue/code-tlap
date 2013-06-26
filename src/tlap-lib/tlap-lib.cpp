@@ -1,6 +1,7 @@
 #include <tlap-lib.h>
 #include <iostream>
 #include <algorithm>
+#include <list>
 
 /**
  * @brief Input::read_integer Read comma separated digits from stdin into an int
@@ -144,6 +145,56 @@ void Sort::quicksort_h_(int n[], const int l, const int h) {
 }
 
 
+
+
+void Sort::merge_h_(int n[], int low, int half, int high) {
+	std::list<int> b1, b2;
+
+	for (int i = low; i <= half; ++i) b1.push_back(n[i]);
+	for (int i = half + 1; i <= high; ++i) b2.push_back(n[i]);
+
+	int i = low, eb1 = 0, eb2 = 0;
+
+	while (!b1.empty() && !b2.empty()) {
+		eb1 = b1.front(); eb2 = b2.front();
+		if (eb1 < eb2) {
+			b1.pop_front();
+			n[i++] = eb1;
+		} else {
+			b2.pop_front();
+			n[i++] = eb2;
+		}
+	}
+	// Add remaining elements
+	while (!b1.empty()) { n[i++] = b1.front(); b1.pop_front(); }
+	while (!b2.empty()) { n[i++] = b2.front(); b2.pop_front(); }
+}
+
+
+void Sort::mergesort_h_(int n[], int start, int end) {
+	if (start >= end) return;
+
+	const int half_point = start + (end - start) / 2; // Or start + end / 2 for values of START && END < MAX_INT - 1
+	mergesort_h_(n, start, half_point);
+	mergesort_h_(n, half_point + 1, end);
+
+	merge_h_(n, start, half_point, end);
+
+}
+
+// While array_size > 0
+//		Split array in half at each iteration
+//
+// Merge left and right arrays
+void Sort::mergesort(int n[], const int N_SIZE) {
+	if (N_SIZE < 1) return;
+	mergesort_h_(n, 0, N_SIZE - 1);
+}
+
+
+
+
+
 void print_arr(int n[], const int N_SIZE) {
 	for (int i = 0; i < N_SIZE; ++i) {
 		std::cout << n[i] << " ";
@@ -151,69 +202,3 @@ void print_arr(int n[], const int N_SIZE) {
 	std::cout << std::endl;
 }
 
-#include <cstring>
-void bench_sorts(int n) {
-	ArrayGenerator ag;
-	Timer t;
-	int* arr = ag.gen_random(n);
-	int* cpy = new int[n];
-
-	for (int i = 0; i < n; i++) cpy[i] = arr[i];
-
-
-	std::cout << "Done generating array" << std::endl;
-//	print_arr(arr, n);
-
-//	std::cout << "=========" << std::endl;
-//	std::cout << "c";
-//	print_arr(cpy, n);
-//	t.start();
-//	Sort::insertion(arr, n);
-//	t.stop();
-//	print_arr(arr, n);
-//	std::cout << "Insertion sort on " << n << " elements: " << t.elapsedMS().count() <<"ms" << std::endl;
-
-
-
-	std::cout << "=========" << std::endl;
-	for (int i = 0; i < n; i++) arr[i] = cpy[i];
-//	std::cout << "c";
-//	print_arr(arr, n);
-	t.start();
-	Sort::quicksort(arr, n);
-	t.stop();
-//	print_arr(arr, n);
-	std::cout << "Quicksort sort on " << n << " elements: " << t.elapsedMS().count() <<"ms" << std::endl;
-
-
-	std::cout << "=========" << std::endl;
-	for (int i = 0; i < n; i++) arr[i] = cpy[i];
-//	std::cout << "c";
-//	print_arr(arr, n);
-	t.start();
-	Sort::quicksort3(arr, n);
-	t.stop();
-//	print_arr(arr, n);
-	std::cout << "Quicksort3 sort on " << n << " elements: " << t.elapsedMS().count() <<"ms" << std::endl;
-
-	for (int i = 0; i < n; i++) arr[i] = 0;
-
-	t.start();
-	Sort::quicksort(arr, n);
-	t.stop();
-	std::cout << "Quicksort Degenerate - Equal Elements: " << t.elapsedMS().count() << "ms" << std::endl;
-
-	for (int i = 0; i < n; i++) arr[i] = 0;
-
-	t.start();
-	Sort::quicksort3(arr, n);
-	t.stop();
-	std::cout << "Quicksort Degenerate3 - Equal Elements: " << t.elapsedMS().count() << "ms" << std::endl;
-
-
-
-
-	delete[] cpy;
-
-
-}

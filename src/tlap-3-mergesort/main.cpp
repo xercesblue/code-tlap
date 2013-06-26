@@ -22,7 +22,7 @@ void merge_h_(int n[], int low, int half, int high) {
 	}
 	// Add remaining elements
 	while (!b1.empty()) { n[i++] = b1.front(); b1.pop(); }
-	while (!b2.empty()) { n[i++] = b2.front(); b1.pop(); }
+	while (!b2.empty()) { n[i++] = b2.front(); b2.pop(); }
 }
 
 

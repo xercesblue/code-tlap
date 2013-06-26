@@ -60,9 +60,5 @@ int main(int argc, char* argv[]) {
 	int n2[N_SIZE] = {-9,-8, -7, -6, -5, -4, -3, -2, -1, 0};
 	quicksort(n2, N_SIZE);
 	print_arr(n2, N_SIZE);
-	int narg = 10;
-	if (argc > 1) {
-		narg = std::stoi(argv[1]);
-	}
-	bench_sorts(narg);
+
 }
