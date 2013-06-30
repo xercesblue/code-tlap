@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <list>
+#include <vector>
 
 /**
  * @brief Input::read_integer Read comma separated digits from stdin into an int

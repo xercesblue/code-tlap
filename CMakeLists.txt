@@ -1,4 +1,4 @@
-project(cpp-practice)
+project(code-tlap)
 cmake_minimum_required(VERSION 2.8)
 option(CXX11 "Compile in C+11 Mode" OFF)
 if (UNIX)
