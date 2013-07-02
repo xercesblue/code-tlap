@@ -19,23 +19,20 @@ void bench_sorts(int n) {
 
 	for (int i = 0; i < n; i++) cpy[i] = arr[i];
 
-
 	std::cout << "Done generating array" << std::endl;
 
-
-//	std::cout << "=========" << std::endl;
-//	avg = 0;
-//	for (int r = 0; r < runs; ++r) {
-//		for (int i = 0; i < n; i++) arr[i] = cpy[i];
-//		t.start();
-//		Sort::insertion(arr, n);
-//		t.stop();
-//		avg += t.elapsedMS().count();
-//	}
-//	std::cout << "Insertion sort on " << n << " elements: " << avg/runs <<"ms" << std::endl;
-
-
-
+	/* Comment out to speed up test runs.
+	std::cout << "=========" << std::endl;
+	avg = 0;
+	for (int r = 0; r < runs; ++r) {
+		for (int i = 0; i < n; i++) arr[i] = cpy[i];
+		t.start();
+		Sort::insertion(arr, n);
+		t.stop();
+		avg += t.elapsedMS().count();
+	}
+	std::cout << "Insertion sort on " << n << " elements: " << avg/runs <<"ms" << std::endl;
+	*/
 	std::cout << "=========" << std::endl;
 	avg = 0;
 	for (int r = 0; r < runs; ++r) {
@@ -46,8 +43,6 @@ void bench_sorts(int n) {
 		avg += t.elapsedMS().count();
 	}
 	std::cout << "Quicksort sort on " << n << " elements: " << avg/runs <<"ms" << std::endl;
-
-
 
 	std::cout << "=========" << std::endl;
 	avg = 0;
@@ -72,27 +67,23 @@ void bench_sorts(int n) {
 	}
 	std::cout << "Mergesort sort on " << n << " elements: " << avg/runs <<"ms" << std::endl;
 
+	/* Comment out bad inputs to quicksort to speed up testing.
+	for (int i = 0; i < n; i++) arr[i] = 0;
 
-//	for (int i = 0; i < n; i++) arr[i] = 0;
+	t.start();
+	Sort::quicksort(arr, n);
+	t.stop();
+	std::cout << "Quicksort Degenerate - Equal Elements: " << t.elapsedMS().count() << "ms" << std::endl;
 
-//	t.start();
-//	Sort::quicksort(arr, n);
-//	t.stop();
-//	std::cout << "Quicksort Degenerate - Equal Elements: " << t.elapsedMS().count() << "ms" << std::endl;
+	for (int i = 0; i < n; i++) arr[i] = 0;
 
-//	for (int i = 0; i < n; i++) arr[i] = 0;
+	t.start();
+	Sort::quicksort3(arr, n);
+	t.stop();
+	std::cout << "Quicksort Degenerate3 - Equal Elements: " << t.elapsedMS().count() << "ms" << std::endl;
 
-//	t.start();
-//	Sort::quicksort3(arr, n);
-//	t.stop();
-//	std::cout << "Quicksort Degenerate3 - Equal Elements: " << t.elapsedMS().count() << "ms" << std::endl;
-
-
-
-
+	*/
 	delete[] cpy;
-
-
 }
 
 
