@@ -10,9 +10,6 @@
 
 void merge_h_(int n[], int low, int half, int high) {
 
-//	for (int i = low; i <= half; ++i) b1.push_back(n[i]);
-//	for (int i = half + 1; i <= high; ++i) b2.push_back(n[i]);
-
 	std::vector<int> tmp(high - low + 1);
 	int li = low, ri = half + 1;
 
@@ -25,10 +22,7 @@ void merge_h_(int n[], int low, int half, int high) {
 		}
 	}
 
-	// 5 4 3 2 1
-	//
-
-	// Add remaining elements
+	// Add remaining elements and copy backs
 	while (li <= half) { tmp.push_back(n[li++]);}
 	while (ri <= high) { tmp.push_back(n[ri++]);}
 	for (int i = low, idx = 0; i <= high; ++i, ++idx) n[i] = tmp.at(idx);
@@ -38,7 +32,8 @@ void merge_h_(int n[], int low, int half, int high) {
 void mergesort_h_(int n[], int start, int end) {
 	if (start >= end) return;
 
-	const int half_point = start + (end - start) / 2; // Or start + end / 2 for values of START && END < MAX_INT - 1
+	// Or start + end / 2 for values of START && END < MAX_INT - 1
+	const int half_point = start + (end - start) / 2;
 	mergesort_h_(n, start, half_point);
 	mergesort_h_(n, half_point + 1, end);
 
@@ -55,7 +50,6 @@ void mergesort(int n[], const int N_SIZE) {
 	if (N_SIZE < 1) return;
 
 	mergesort_h_(n, 0, N_SIZE - 1);
-
 }
 
 int main(int argc, char* argv[]) {
@@ -63,12 +57,16 @@ int main(int argc, char* argv[]) {
 	ArrayGenerator ag;
 	int* arr = ag.gen_random(N_SIZE);
 	//int arr2[] = { 5, 4, 3 ,2};
+
 	print_arr(arr, N_SIZE);
+
 	Timer t;
 	t.start();
 	mergesort(arr, N_SIZE);
 	t.stop();
+
 	std::cout << t.elapsedMS().count() << "ms" << std::endl;
 	print_arr(arr, N_SIZE);
+
 	return 0;
 }
