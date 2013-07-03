@@ -244,6 +244,16 @@ void Sort::mergesort(int n[], const int N_SIZE) {
 	delete[] tmp;
 }
 
+// Check if an array is sorted
+bool Sort::is_sorted(int n[], const int N_SIZE, const Order ord) {
+	for (int i = 1; i <= N_SIZE; ++i) {
+		if ((ord == Sort::Increment ? n[i-1] > n[i] : n[i] > n[i-1])) {
+			return false;
+		}
+	}
+	return true;
+}
+
 void print_arr(int n[], const int N_SIZE) {
 	for (int i = 0; i < N_SIZE; ++i) {
 		std::cout << n[i] << " ";

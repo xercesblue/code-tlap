@@ -38,10 +38,13 @@ public:
 class Sort {
 public:
 	Sort() {}
+	enum Order {Increment, Decrement};
 	static void insertion(int n[], const int N_SIZE);
 	static void quicksort(int n[], const int N_SIZE);
 	static void quicksort3(int n[], const int N_SIZE);
 	static void mergesort(int n[], const int N_SIZE);
+
+	static bool is_sorted(int n[], const int N_SIZE, const Order ord = Increment);
 private:
 	// Quicksort Helpers
 	// Partition Array
