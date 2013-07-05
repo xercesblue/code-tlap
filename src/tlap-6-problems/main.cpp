@@ -76,15 +76,15 @@ int main(int argc, char* argv[]) {
 	std::cout << "Sum of array: " << ret << std::endl;
 
 	int par[N_SIZE] = {1, 1, 0, 0, 0};
-	std::cout << "Parity of array odd?: "; print_arr(par, N_SIZE, false);
+	std::cout << "Parity of array odd?: "; tlap::print_arr(par, N_SIZE, false);
 	std::cout << " is: " << std::boolalpha << is_odd_parity_r(par, N_SIZE) << std::endl;
 
 	int par2[N_SIZE] = {1, 0, 0, 0, 0};
-	std::cout << "Parity of array odd?: "; print_arr(par2, N_SIZE, false);
+	std::cout << "Parity of array odd?: "; tlap::print_arr(par2, N_SIZE, false);
 	std::cout << " is: " << std::boolalpha << is_odd_parity_r(par2, N_SIZE) << std::endl;
 
 	int par3[N_SIZE] = {1, 1, 0, 0, 0};
-	std::cout << "Parity of array odd?: "; print_arr(par3, N_SIZE, false);
+	std::cout << "Parity of array odd?: "; tlap::print_arr(par3, N_SIZE, false);
 	std::cout << " is: " << std::boolalpha << is_odd_parity_r2(par3, N_SIZE) << std::endl;
 	return 0;
 }

@@ -7,6 +7,7 @@
 
 // Up to date sorting code in tlap-lib.h/.cpp
 
+
 // Chose pivot
 //  Move all elements <= pivot to the left of pivot
 //  Move all elements > pivot to the right of pivot
@@ -35,12 +36,12 @@ int qs_partition_(int n[], const int low, const int high) {
 	int after_pivot = low;
 	for (int i = low; i < high; ++i) {
 		if (n[i] < n[pivot]) {
-			swap(&n[i], &n[after_pivot]);
+			tlap::Sort::swap(&n[i], &n[after_pivot]);
 			after_pivot++;
 		}
 	}
 
-	swap(&n[pivot], &n[after_pivot]);
+	tlap::Sort::swap(&n[pivot], &n[after_pivot]);
 
 	return pivot;
 }
@@ -62,9 +63,9 @@ int main(int argc, char* argv[]) {
 	const int N_SIZE = 10;
 	int n[N_SIZE] = { 9,8,7,6,5,4,3,2,1,0 };
 	quicksort(n, N_SIZE);
-	print_arr(n, N_SIZE);
+	tlap::print_arr(n, N_SIZE);
 	int n2[N_SIZE] = {-9,-8, -7, -6, -5, -4, -3, -2, -1, 0};
 	quicksort(n2, N_SIZE);
-	print_arr(n2, N_SIZE);
+	tlap::print_arr(n2, N_SIZE);
 
 }

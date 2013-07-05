@@ -6,7 +6,7 @@
 
 
 int mode(int n[], const int N_SIZE) {
-	print_arr(n, N_SIZE);
+	tlap::print_arr(n, N_SIZE);
 
 	// Generate Histogram
 	int *hist = new int[N_SIZE];
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
 
 	int n[N_SIZE] = {1,2,3,4,5,6,6,7,8,9,0};
 	int mode_n = mode(n, N_SIZE);
-	print_arr(n, N_SIZE);
+	tlap::print_arr(n, N_SIZE);
 	std::cout << "Mode is: " << mode_n << std::endl;
 	return 0;
 }

@@ -103,8 +103,7 @@ void draw_x() {
 int bin2dec() {
 	char scanned;
 	int number = 0, digit;
-
-	while ((scanned = Input::read_ch()) != '\n') {
+	while ((scanned = tlap::Input::read_ch()) != '\n') {
 		digit = scanned - '0';
 		number = (number * 2) + digit;
 	}
@@ -112,7 +111,7 @@ int bin2dec() {
 }
 
 std::string dec2bin() {
-	int number = Input::read_integer();
+	int number = tlap::Input::read_integer();
 	std::string res;
 	int q;
 	while (number > 0) {
@@ -142,7 +141,7 @@ void line_stats(struct LineStats& stats) {
 	stats.max_vowels = 0;
 	stats.words = 0;
 
-	while ((scanned = Input::read_ch())) {
+	while ((scanned = tlap::Input::read_ch())) {
 		switch (scanned) {
 		case 'a':
 		case 'A':

@@ -54,19 +54,19 @@ void mergesort(int n[], const int N_SIZE) {
 
 int main(int argc, char* argv[]) {
 	const int N_SIZE = 10;
-	ArrayGenerator ag;
+	tlap::ArrayGenerator ag;
 	int* arr = ag.gen_random(N_SIZE);
 	//int arr2[] = { 5, 4, 3 ,2};
 
-	print_arr(arr, N_SIZE);
+	tlap::print_arr(arr, N_SIZE);
 
-	Timer t;
+	tlap::Timer t;
 	t.start();
 	mergesort(arr, N_SIZE);
 	t.stop();
 
 	std::cout << t.elapsedMS().count() << "ms" << std::endl;
-	print_arr(arr, N_SIZE);
+	tlap::print_arr(arr, N_SIZE);
 
 	return 0;
 }

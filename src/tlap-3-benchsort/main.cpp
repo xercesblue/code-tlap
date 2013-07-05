@@ -10,8 +10,8 @@
 
 // Up to date sorting code in tlap-lib.h/.cpp
 void bench_sorts(int n) {
-	ArrayGenerator ag;
-	Timer t;
+	tlap::ArrayGenerator ag;
+	tlap::Timer t;
 	int* arr = ag.gen_random(n);
 	int* cpy = new int[n];
 	long avg = 0;
@@ -38,7 +38,7 @@ void bench_sorts(int n) {
 	for (int r = 0; r < runs; ++r) {
 		for (int i = 0; i < n; i++) arr[i] = cpy[i];
 		t.start();
-		Sort::quicksort(arr, n);
+		tlap::Sort::quicksort(arr, n);
 		t.stop();
 		avg += t.elapsedMS().count();
 	}
@@ -49,7 +49,7 @@ void bench_sorts(int n) {
 	for (int r = 0; r < runs; ++r) {
 		for (int i = 0; i < n; i++) arr[i] = cpy[i];
 		t.start();
-		Sort::quicksort3(arr, n);
+		tlap::Sort::quicksort3(arr, n);
 		t.stop();
 		avg += t.elapsedMS().count();
 	}
@@ -61,7 +61,7 @@ void bench_sorts(int n) {
 	for (int r = 0; r < runs; ++r) {
 		for (int i = 0; i < n; i++) arr[i] = cpy[i];
 		t.start();
-		Sort::mergesort(arr, n);
+		tlap::Sort::mergesort(arr, n);
 		t.stop();
 		avg += t.elapsedMS().count();
 	}

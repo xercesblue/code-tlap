@@ -124,6 +124,7 @@ void replace(ArrayString str, ArrayStringC this_str, ArrayStringC that_str) {
 }
 
 double median(int n[], const int N_SIZE) {
+	using namespace tlap;
 	if (!Sort::is_sorted(n, N_SIZE, Sort::Increment)) {
 		Sort::mergesort(n, N_SIZE);
 	}
@@ -151,7 +152,7 @@ double percentile(int n[], const int N_SIZE, int percent) {
 	int* tmp = new int[N_SIZE];
 	for (int i = 0; i < N_SIZE; ++i) tmp[i] = n[i];
 
-	Sort::quicksort3(tmp, N_SIZE);
+	tlap::Sort::quicksort3(tmp, N_SIZE);
 
 	if (percent >= 100) {
 		int ret = tmp[N_SIZE - 1];
@@ -193,11 +194,11 @@ int main(int argc, char* argv[]) {
 	strsub = substring(substr, 1, 7);
 	replace(strrep, "ab", "XX");
 
-	std::cout << "Median of: ";	print_arr(arr_unsorted, N_SIZE);
+	std::cout << "Median of: ";	tlap::print_arr(arr_unsorted, N_SIZE);
 	std::cout << median(arr_unsorted, N_SIZE) << std::endl;
 	std::cout << "Appending '!' to 'cool': " << str << std::endl;
 	std::cout << "Appending '?' to null string: " << strnull << std::endl;
-	std::cout << "Scores: "; print_arr(scores, SCORES_SIZE);
+	std::cout << "Scores: "; tlap::print_arr(scores, SCORES_SIZE);
 	std::cout << "25 percentile of Scores: " << percentile(scores, SCORES_SIZE, 100) << std::endl;
 	std::cout << "Test substring(1, 7) on 'abcdefg': " << strsub << std::endl;
 	std::cout << "Test replace(\"ab\",\"XX\") on 'abcabfg': " << strrep << std::endl;

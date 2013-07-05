@@ -1,20 +1,24 @@
 #ifndef TLAP_LIB_H
 #define TLAP_LIB_H
 
+#include <iostream>
+#include <cstddef>
+#include <ctime>
+#include <list>
 
-class Input {
-
-public:
-
-	Input() {};
-	static int read_integer();
-	static char read_ch();
-};
 #ifdef CXX11
 #include <chrono>
-#include <ctime>
-#include <iostream>
+#include <memory>
+#include <random>
+#endif
 
+namespace tlap {
+namespace Input {
+	int read_integer();
+	char read_ch();
+}
+
+#ifdef CXX11
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
 using std::chrono::milliseconds;
@@ -35,39 +39,49 @@ public:
 
 #endif
 
-class Sort {
-public:
-	Sort() {}
-	enum Order {Increment, Decrement};
-	static void insertion(int n[], const int N_SIZE);
-	static void quicksort(int n[], const int N_SIZE);
-	static void quicksort3(int n[], const int N_SIZE);
-	static void mergesort(int n[], const int N_SIZE);
 
-	static bool is_sorted(int n[], const int N_SIZE, const Order ord = Increment);
-private:
+
+namespace Sort {
+	enum Order {Increment, Decrement};
+	void insertion(int n[], const int N_SIZE);
+	void quicksort(int n[], const int N_SIZE);
+	void quicksort3(int n[], const int N_SIZE);
+	void mergesort(int n[], const int N_SIZE);
+
+	bool is_sorted(int n[], const int N_SIZE, const Order ord = Increment);
+
 	// Quicksort Helpers
 	// Partition Array
-	inline static int qs_partition_(int n[], const int low, const int high);
-	inline static int qs_partition3_(int n[], const int low, const int high);
+	int qs_partition_(int n[], const int low, const int high);
+	int qs_partition3_(int n[], const int low, const int high);
 	// Recursive Helper
-	inline static void quicksort_h_(int n[], const int l, const int h);
-	inline static void quicksort3_(int n[], const int l, const int h);
+	void quicksort_h_(int n[], const int l, const int h);
+	void quicksort3_(int n[], const int l, const int h);
 
 	// Mergesort Helpers
-	inline static void mergesort_h_(int n[], const int l, const int h);
-	inline static void mergesort3_h_(int n[], int tmp[], const int l, const int h);
-	inline static void merge_h_(int n[], int low, int half, int high);
-	inline static void merge2_h_(int n[], int low, int half, int high);
-	inline static void merge3_h_(int n[], int tmp[], int low, int half, int high);
-};
+	void mergesort_h_(int n[], const int l, const int h);
+	void mergesort3_h_(int n[], int tmp[], const int l, const int h);
+	void merge_h_(int n[], int low, int half, int high);
+	void merge2_h_(int n[], int low, int half, int high);
+	void merge3_h_(int n[], int tmp[], int low, int half, int high);
+
+	inline void swap(int* a, int* b) {
+		int tmp = *a;
+		*a = *b;
+		*b = tmp;
+	}
+
+	inline void swap(int n[], int a_idx, int b_idx) {
+		int tmp = n[a_idx];
+		n[a_idx] = n[b_idx];
+		n[b_idx] = tmp;
+	}
+
+	void bench_sorts(int n);
+} //namespace Sort
+
 
 #ifdef CXX11
-#include <list>
-#include <memory>
-#include <cstddef>
-#include <random>
-
 class ArrayGenerator {
 	std::list<std::unique_ptr<int[]>> clist;
 public:
@@ -90,19 +104,8 @@ public:
 
 #endif
 
-inline void swap(int* a, int* b) {
-	int tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
 
-inline void swap(int n[], int a_idx, int b_idx) {
-	int tmp = n[a_idx];
-	n[a_idx] = n[b_idx];
-	n[b_idx] = tmp;
-}
-
-void bench_sorts(int n);
 void print_arr(int n[], const int N_SIZE, const bool new_line = true);
 
+} // namespace tlap
 #endif //TLAP_LIB_H

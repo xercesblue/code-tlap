@@ -4,6 +4,7 @@
 #include <list>
 #include <vector>
 
+namespace tlap {
 /**
  * @brief Input::read_integer Read comma separated digits from stdin into an int
  * @return integer read
@@ -19,7 +20,7 @@ int Input::read_integer() {
 	// i2) 1, 1 * 10  + 2 = 12
 	// i3) 12, 12 * 10 + 3 = 123
 
-	while ((scanned = std::cin.get()) != '\n' && scanned != ',') {
+	while ((scanned = ::std::cin.get()) != '\n' && scanned != ',') {
 		if (scanned == '-') { neg = true; continue;}
 		number *= 10;
 		number += scanned - '0';
@@ -33,8 +34,10 @@ int Input::read_integer() {
  * @return character read
  */
 char Input::read_ch() {
-	return std::cin.get();
+	return ::std::cin.get();
 }
+
+
 
 void Sort::insertion(int n[], const int N_SIZE)
 {
@@ -262,3 +265,4 @@ void print_arr(int n[], const int N_SIZE, const bool new_line) {
 		std::cout << std::endl;
 }
 
+}
