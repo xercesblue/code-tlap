@@ -13,6 +13,55 @@
 #endif
 
 namespace tlap {
+template<typename T>
+class BinaryTree;
+
+template<typename T>
+class BinaryTreeNode {
+    T data_;
+    BinaryTreeNode<T>* left_;
+    BinaryTreeNode<T>* right_;
+public:
+    BinaryTreeNode(T data, BinaryTreeNode<T>* left, BinaryTreeNode<T>* right) : data_(data), left_(left), right_(right) {}
+    BinaryTreeNode() : data_(T()), left_(nullptr), right_(nullptr) {}
+    BinaryTreeNode(T data) : data_(data), left_(nullptr), right_(nullptr) {}
+    BinaryTreeNode<T>& set_data(T element) {
+        data_ = element;
+        return *this;
+    }
+
+    BinaryTreeNode<T>& set_left(T element) {
+        BinaryTreeNode<T>* n = new BinaryTreeNode<T>(element, nullptr, nullptr);
+        left_ = n;
+        return *this;
+    }
+    BinaryTreeNode<T>& set_right(T element) {
+        BinaryTreeNode<T>* n = new BinaryTreeNode<T>(element, nullptr, nullptr);
+        right_ = n;
+        return *this;
+    }
+
+    ~BinaryTreeNode() {
+        delete left_;
+        delete right_;
+    }
+    friend class BinaryTree<T>;
+};
+
+template<typename T>
+class BinaryTree {
+public:
+    BinaryTree() { root_ = new BinaryTreeNode<T>(); }
+    BinaryTreeNode<T>* root_node() { return root_; }
+    ~BinaryTree() { delete root_; }
+
+    bool is_max_heap();
+    void set_root_element(T element) { root_->set_data(element); }
+private:
+    BinaryTreeNode<T>* root_;
+    bool is_max_heap_(BinaryTreeNode<T>*& node);
+};
+
 namespace Input {
 int read_integer();
 char read_ch();

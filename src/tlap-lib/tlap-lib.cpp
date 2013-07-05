@@ -263,4 +263,28 @@ void print_arr(int n[], const int N_SIZE, const bool new_line) {
         std::cout << std::endl;
 }
 
+template<typename T>
+inline
+bool BinaryTree<T>::is_max_heap() {
+    if (root_ == nullptr) return false;
+    return is_max_heap_(root_);
+}
+
+template<typename T>
+inline
+bool BinaryTree<T>::is_max_heap_(BinaryTreeNode<T>*& node) {
+    if (node == nullptr) return true;
+    bool left = is_max_heap_(node->left_);
+    bool right = is_max_heap_(node->right_);
+    bool bLeft = false, bRight = false;
+    if (node->left_) bLeft = node->data_ > node->left_->data_;
+    else bLeft = true;
+    if (node->right_) bRight = node->data_ > node->right_->data_;
+    else bRight = true;
+    return left && right && bLeft && bRight;
+}
+
+template class BinaryTree<int>;
+template class BinaryTreeNode<int>;
+
 }
