@@ -56,7 +56,17 @@ bool is_odd_parity_r(int n[], int size) {
 	return parity;
 }
 
+// Refactored and simplified
+bool is_odd_parity_r2(int n[], int size) {
+	if (size == 0) return false;
 
+	bool parity = is_odd_parity_r2(n, size - 1);
+	int bit = n[size - 1];
+
+	if (bit & 1) parity = !parity;
+
+	return parity;
+}
 
 
 int main(int argc, char* argv[]) {
@@ -73,5 +83,8 @@ int main(int argc, char* argv[]) {
 	std::cout << "Parity of array odd?: "; print_arr(par2, N_SIZE, false);
 	std::cout << " is: " << std::boolalpha << is_odd_parity_r(par2, N_SIZE) << std::endl;
 
+	int par3[N_SIZE] = {1, 1, 0, 0, 0};
+	std::cout << "Parity of array odd?: "; print_arr(par3, N_SIZE, false);
+	std::cout << " is: " << std::boolalpha << is_odd_parity_r2(par3, N_SIZE) << std::endl;
 	return 0;
 }
