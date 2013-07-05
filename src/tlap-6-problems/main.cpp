@@ -25,6 +25,7 @@ int sum_positive_r(int n[], int size) {
 // Parity = 1, odd number of 1s
 // Parity = 0, even number of 1s (this is also the empty string case)
 // return Parity
+// Precondition: for all x in n[0..N_SIZE) 0 <= x <= 1
 bool is_odd_parity(int n[], const int N_SIZE) {
 	if (N_SIZE == 0) return true; // empty string is even parity
 	bool parity = false;
@@ -68,6 +69,21 @@ bool is_odd_parity_r2(int n[], int size) {
 	return parity;
 }
 
+int count_number(int n[], const int N_SIZE, int target) {
+    if (N_SIZE == 0) return 0;
+    int count = 0;
+    for (int i = 0; i < N_SIZE; ++i) {
+        if (n[i] == target) count++;
+    }
+    return count;
+}
+
+int count_number_r(int n[], int size, int target) {
+    if (size == 0) return 0;
+    int count = count_number_r(n, size - 1, target);
+    int number = n[size - 1];
+    return (number == target) ? count + 1 : count;
+}
 
 int main(int argc, char* argv[]) {
 	const int N_SIZE = 5;
@@ -83,8 +99,12 @@ int main(int argc, char* argv[]) {
 	std::cout << "Parity of array odd?: "; tlap::print_arr(par2, N_SIZE, false);
 	std::cout << " is: " << std::boolalpha << is_odd_parity_r(par2, N_SIZE) << std::endl;
 
-	int par3[N_SIZE] = {1, 1, 0, 0, 0};
+    int par3[N_SIZE] = {0, 0, 1, 0, 0};
 	std::cout << "Parity of array odd?: "; tlap::print_arr(par3, N_SIZE, false);
 	std::cout << " is: " << std::boolalpha << is_odd_parity_r2(par3, N_SIZE) << std::endl;
+
+    std::cout << "Count 0s: "; tlap::print_arr(par3, N_SIZE, false);
+    std::cout << " is: " << std::boolalpha << count_number(par3, N_SIZE, 0) << std::endl;
+
 	return 0;
 }
