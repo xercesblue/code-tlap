@@ -17,17 +17,17 @@ int sum_positive(int n[], const int N_SIZE) {
 
 int sum_positive_r(int n[], int size) {
 	if (size == 0) return 0;
-	int sum = sum_positive(n, size - 1);
+	int sum = sum_positive_r(n, size - 1);
 	return (n[size - 1] > 0) ? n[size - 1] + sum : sum;
 }
 
-// Determines the parity of the string represented by n[0..N_SIZE)
+// Determines if a string represented by n[0..N_SIZE) has odd parity
 // Parity = 1, odd number of 1s
-// Parity = 0, even number of 1s
+// Parity = 0, even number of 1s (this is also the empty string case)
 // return Parity
-bool array_parity(int n[], const int N_SIZE) {
+bool is_odd_parity(int n[], const int N_SIZE) {
 	if (N_SIZE == 0) return true; // empty string is even parity
-	bool parity = true;
+	bool parity = false;
 	for (int i = 0; i < N_SIZE; ++i) {
 		int bit = n[i];
 		if (bit & 1 && !parity) parity = !parity;
@@ -43,14 +43,35 @@ bool array_parity(int n[], const int N_SIZE) {
 	return parity;
 }
 
+bool is_odd_parity_r(int n[], int size) {
+	if (size == 0) return false;
+
+	bool parity = is_odd_parity_r(n, size - 1);
+	int bit = n[size - 1];
+
+	if (bit & 1 && !parity) parity = !parity;
+	else if (bit & 0 && !parity) { } // do nothing
+	else if (bit & 1 && parity) { parity = !parity; }
+	else /* bit & 0 && parity) */ { } // do nothing
+	return parity;
+}
+
+
+
+
 int main(int argc, char* argv[]) {
 	const int N_SIZE = 5;
 	int arr[N_SIZE] = {1,2,3,4,-8};
 	int ret = sum_positive_r(arr, N_SIZE);
 	std::cout << "Sum of array: " << ret << std::endl;
 
-	int par[N_SIZE] = {1,1,0,1,1};
-	std::cout << "Parity of array: "; print_arr(par, N_SIZE);
-	std::cout << " is:" << array_parity(par, N_SIZE);
+	int par[N_SIZE] = {1, 1, 0, 0, 0};
+	std::cout << "Parity of array odd?: "; print_arr(par, N_SIZE, false);
+	std::cout << " is: " << std::boolalpha << is_odd_parity_r(par, N_SIZE) << std::endl;
+
+	int par2[N_SIZE] = {1, 0, 0, 0, 0};
+	std::cout << "Parity of array odd?: "; print_arr(par2, N_SIZE, false);
+	std::cout << " is: " << std::boolalpha << is_odd_parity_r(par2, N_SIZE) << std::endl;
+
 	return 0;
 }

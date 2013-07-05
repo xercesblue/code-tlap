@@ -254,10 +254,11 @@ bool Sort::is_sorted(int n[], const int N_SIZE, const Order ord) {
 	return true;
 }
 
-void print_arr(int n[], const int N_SIZE) {
+void print_arr(int n[], const int N_SIZE, const bool new_line) {
 	for (int i = 0; i < N_SIZE; ++i) {
 		std::cout << n[i] << " ";
 	}
-	std::cout << std::endl;
+	if (new_line)
+		std::cout << std::endl;
 }
 

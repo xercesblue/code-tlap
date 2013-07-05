@@ -103,6 +103,6 @@ inline void swap(int n[], int a_idx, int b_idx) {
 }
 
 void bench_sorts(int n);
-void print_arr(int n[], const int N_SIZE);
+void print_arr(int n[], const int N_SIZE, const bool new_line = true);
 
 #endif //TLAP_LIB_H
