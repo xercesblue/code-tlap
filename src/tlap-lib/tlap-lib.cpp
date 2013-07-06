@@ -263,26 +263,52 @@ void print_arr(int n[], const int N_SIZE, const bool new_line) {
         std::cout << std::endl;
 }
 
+// Checks if a binary tree has a max-heap property
 template<typename T>
 inline
-bool BinaryTree<T>::is_max_heap() {
+bool BinaryTree<T>::is_max_heap() const {
     if (root_ == nullptr) return false;
     return is_max_heap_(root_);
 }
 
 template<typename T>
 inline
-bool BinaryTree<T>::is_max_heap_(BinaryTreeNode<T>*& node) {
+bool BinaryTree<T>::is_max_heap_(const BinaryTreeNode<T>* node) const {
     if (node == nullptr) return true;
     bool left = is_max_heap_(node->left_);
     bool right = is_max_heap_(node->right_);
-    bool bLeft = false, bRight = false;
-    if (node->left_) bLeft = node->data_ > node->left_->data_;
-    else bLeft = true;
-    if (node->right_) bRight = node->data_ > node->right_->data_;
-    else bRight = true;
-    return left && right && bLeft && bRight;
+    bool b_left = false, b_right = false;
+    if (node->left_) b_left = node->data_ >= node->left_->data_;
+    else b_left = true;
+    if (node->right_) b_right = node->data_ >= node->right_->data_;
+    else b_right = true;
+    return left && right && b_left && b_right;
 }
+
+// Checks if a binary tree has a binary search tree property
+template<typename T>
+inline
+bool BinaryTree<T>::is_bst() const {
+    if (root_ == nullptr) return false;
+    return is_bst_(root_);
+}
+
+template<typename T>
+inline
+bool BinaryTree<T>::is_bst_(const BinaryTreeNode<T>* node) const {
+    if (node == nullptr) return true; // leaves constitute bst
+    bool left = is_bst_(node->left_);
+    bool right = is_bst_(node->right_);
+
+    bool b_left = false, b_right = false;
+    if (node->left_) b_left = node->data_ >= node->left_->data_;
+    else b_left = true;
+    if (node->right_) b_right = node->data_ < node->right_->data_;
+    else b_right = true;
+
+    return left && right && b_left && b_right;
+}
+
 
 template class BinaryTree<int>;
 template class BinaryTreeNode<int>;

@@ -107,10 +107,12 @@ int main(int argc, char* argv[]) {
     std::cout << " is: " << std::boolalpha << count_number(par3, N_SIZE, 0) << std::endl;
 
     tlap::BinaryTree<int> bt;
-    bt.root_node()->set_data(10).set_left(9);
-    bt.root_node()->set_right(11);
+    bt.root_node()->        set_data(7);
+
+    bt.root_node()->set_left(9);
+    bt.root_node()->                      set_right(8);
 
     std::cout << "Is Binary Tree a max-heap?: " << std::boolalpha << bt.is_max_heap() << std::endl;
-
+    std::cout << "Is Binary Tree a bst?: " << std::boolalpha << bt.is_bst() << std::endl;
 	return 0;
 }

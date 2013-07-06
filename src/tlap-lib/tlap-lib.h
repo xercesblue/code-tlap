@@ -55,11 +55,13 @@ public:
     BinaryTreeNode<T>* root_node() { return root_; }
     ~BinaryTree() { delete root_; }
 
-    bool is_max_heap();
+    bool is_max_heap() const;
+    bool is_bst() const;
     void set_root_element(T element) { root_->set_data(element); }
 private:
     BinaryTreeNode<T>* root_;
-    bool is_max_heap_(BinaryTreeNode<T>*& node);
+    bool is_max_heap_(const BinaryTreeNode<T>* node) const;
+    bool is_bst_(const BinaryTreeNode<T>* node) const;
 };
 
 namespace Input {
