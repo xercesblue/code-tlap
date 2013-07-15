@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <list>
 #include <vector>
+#include <limits>
 
 namespace tlap {
 /**
@@ -273,7 +274,7 @@ bool BinaryTree<T>::is_max_heap() const {
 
 template<typename T>
 inline
-bool BinaryTree<T>::is_max_heap_(const BinaryTreeNode<T>* node) const {
+bool BinaryTree<T>::is_max_heap_(BinaryTreeNode<T> *const node) const {
     if (node == nullptr) return true;
     bool left = is_max_heap_(node->left_);
     bool right = is_max_heap_(node->right_);
@@ -290,15 +291,15 @@ template<typename T>
 inline
 bool BinaryTree<T>::is_bst() const {
     if (root_ == nullptr) return false;
-    return is_bst_(root_);
+    return is_bst_(root_, std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
 }
 
 template<typename T>
 inline
-bool BinaryTree<T>::is_bst_(const BinaryTreeNode<T>* node) const {
+bool BinaryTree<T>::is_bst_incorrect_(BinaryTreeNode<T> *const node) const {
     if (node == nullptr) return true; // leaves constitute bst
-    bool left = is_bst_(node->left_);
-    bool right = is_bst_(node->right_);
+    bool left = is_bst_incorrect_(node->left_);
+    bool right = is_bst_incorrect_(node->right_);
 
     bool b_left = false, b_right = false;
     if (node->left_) b_left = node->data_ >= node->left_->data_;
@@ -307,6 +308,33 @@ bool BinaryTree<T>::is_bst_(const BinaryTreeNode<T>* node) const {
     else b_right = true;
 
     return left && right && b_left && b_right;
+}
+/* Not BST:
+ *    7
+ *   / \
+ * 4    \
+ *  \    9
+ *   8
+ *
+ * BST:
+ *    7
+ *   / \
+ * 4    \
+ *  \    8
+ *   6
+ *
+ *
+ */
+template<typename T>
+inline
+bool BinaryTree<T>::is_bst_(BinaryTreeNode<T> *const node, int min, int max) const {
+    if (node == nullptr) return true;
+
+    if (node->data_ > max || node->data_ < min)
+        return false;
+
+    return is_bst_(node->left_, min, node->data_ - 1) &&
+            is_bst_(node->right_, node->data_ + 1, max);
 }
 
 

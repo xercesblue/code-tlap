@@ -109,8 +109,10 @@ int main(int argc, char* argv[]) {
     tlap::BinaryTree<int> bt;
     bt.root_node()->        set_data(7);
 
-    bt.root_node()->set_left(9);
+    bt.root_node()->set_left(4).set_right(6);
     bt.root_node()->                      set_right(8);
+
+
 
     std::cout << "Is Binary Tree a max-heap?: " << std::boolalpha << bt.is_max_heap() << std::endl;
     std::cout << "Is Binary Tree a bst?: " << std::boolalpha << bt.is_bst() << std::endl;

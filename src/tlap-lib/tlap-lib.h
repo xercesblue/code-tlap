@@ -33,12 +33,12 @@ public:
     BinaryTreeNode<T>& set_left(T element) {
         BinaryTreeNode<T>* n = new BinaryTreeNode<T>(element, nullptr, nullptr);
         left_ = n;
-        return *this;
+        return *left_;
     }
     BinaryTreeNode<T>& set_right(T element) {
         BinaryTreeNode<T>* n = new BinaryTreeNode<T>(element, nullptr, nullptr);
         right_ = n;
-        return *this;
+        return *right_;
     }
 
     ~BinaryTreeNode() {
@@ -60,8 +60,9 @@ public:
     void set_root_element(T element) { root_->set_data(element); }
 private:
     BinaryTreeNode<T>* root_;
-    bool is_max_heap_(const BinaryTreeNode<T>* node) const;
-    bool is_bst_(const BinaryTreeNode<T>* node) const;
+    bool is_max_heap_(BinaryTreeNode<T> *const node) const;
+    bool is_bst_incorrect_(BinaryTreeNode<T> *const node) const;
+    bool is_bst_(BinaryTreeNode<T> *const node, int min, int max) const;
 };
 
 namespace Input {
