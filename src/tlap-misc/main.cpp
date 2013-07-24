@@ -1,4 +1,7 @@
 #include <iostream>
+#include <vector>
+#include <set>
+
 #include <tlap-lib.h>
 
 // Francisco De La Cruz
@@ -60,11 +63,74 @@ void insertion_sort_fixed(int n[], const int N_SIZE, int fixed) {
     }
 }
 
+template<typename T>
+
+class UGraph {
+
+public:
+
+    UGraph() : hasCycle_(false) {  }
+    UGraph(int vCount) : hasCycle_(false) { }
+
+
+    typedef std::array<bool, 10> VertexVisited;
+    typedef std::array<std::set<int>, 10> VertexAdj;
+
+
+    void addEdgeU(T src, T dst) {
+        addEdgeD(src, dst);
+        addEdgeD(dst, src);
+    }
+
+    // TODO: Cache this
+    bool hasCycle() {
+
+        visited_.fill(false);
+        dfs(1, -1);
+        return hasCycle_;
+    }
+
+private:
+
+    void dfs(int u, int w);
+    void addEdgeD(const T src, const T dst) {
+        if (src < 0) return;
+        std::set<int>& vlist = vertices_[src];
+        vlist.insert(dst);
+    }
+
+private:
+    VertexAdj vertices_;
+    VertexVisited visited_;
+    bool hasCycle_;
+
+};
+
+template<typename T>
+void UGraph<T>::dfs(int u, int w) {
+    visited_[u] = true;
+    std::set<int>& vlist = vertices_[u];
+    for(std::set<int>::iterator adj = vlist.begin(); adj != vlist.end(); ++adj) {
+        if (!visited_[*adj])
+            dfs(*adj, u);
+        else if (w != *adj) { hasCycle_ = true; }
+    }
+
+}
+
 int main(int argc, char* argv[]) {
     const int N_SIZE = 6;
     int n[N_SIZE] = { 2, 5, 5, -1, 1, 2 };
     tlap::print_arr(n, N_SIZE);
     insertion_sort_fixed(n, N_SIZE, 2);
     tlap::print_arr(n, N_SIZE);
+
+    UGraph<int> ug(10);
+    ug.addEdgeU(1, 2);
+    ug.addEdgeU(1, 3);
+    ug.addEdgeU(2, 3);
+    if (ug.hasCycle()) { std::cout << "Found Cycle" << std::endl; }
+    else { std::cout << "No cycle Found!" << std::endl; }
+
 	return 0;
 }
