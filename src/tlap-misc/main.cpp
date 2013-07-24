@@ -65,12 +65,12 @@ void insertion_sort_fixed(int n[], const int N_SIZE, int fixed) {
 
 template<typename T>
 
-class UGraph {
+class Graph {
 
 public:
 
-    UGraph() : hasCycle_(false) {  }
-    UGraph(int vCount) : hasCycle_(false) { }
+    Graph() : hasCycle_(false) {  }
+    Graph(int vCount) : hasCycle_(false) { }
 
 
     typedef std::array<bool, 10> VertexVisited;
@@ -107,7 +107,7 @@ private:
 };
 
 template<typename T>
-void UGraph<T>::dfs(int u, int w) {
+void Graph<T>::dfs(int u, int w) {
     visited_[u] = true;
     std::set<int>& vlist = vertices_[u];
     for(std::set<int>::iterator adj = vlist.begin(); adj != vlist.end(); ++adj) {
@@ -125,7 +125,7 @@ int main(int argc, char* argv[]) {
     insertion_sort_fixed(n, N_SIZE, 2);
     tlap::print_arr(n, N_SIZE);
 
-    UGraph<int> ug(10);
+    Graph<int> ug(10);
     ug.addEdgeU(1, 2);
     ug.addEdgeU(1, 3);
     ug.addEdgeU(2, 3);
